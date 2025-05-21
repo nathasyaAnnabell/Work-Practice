@@ -1,7 +1,9 @@
 BACKEND API
 
 
+
 HTTP{{BASE_URL}}/api
+
 
 
 users:auth and profile
@@ -22,6 +24,7 @@ PATCH /api/users/id
 DEL   /api/users/id
 
 
+
 products
 
 GET   /api/products
@@ -33,6 +36,7 @@ GET   /api/products/id
 <admin>PATCH /api/products/id
 
 <admin>DEL   /api/products
+
 
 
 cartItem
@@ -48,6 +52,7 @@ PATCH /api/cart/id
 DEL   /api/cart/id
 
 
+
 reviews
 
 <admin>GET /api/reviews
@@ -61,6 +66,7 @@ PATCH  /api/reviews/id
 DEL    /api/reviews/id
 
 
+
 payments
 
 <admin>GET /api/payments
@@ -72,6 +78,7 @@ POST /api/payments
 <admin>PATCH /api/payments
 
 <admin>DEL   /api/payments
+
 
 
 admin dash
