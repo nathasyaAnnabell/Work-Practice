@@ -19,6 +19,8 @@ GET   /api/users
 
 GET   /api/users/id
 
+PUT  /api/users/profile
+
 PATCH /api/users/id
 
 DEL   /api/users/id
