@@ -14,17 +14,22 @@ export const signUp = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const userData = {
+      name,
+      email,
+      password: hashedPassword,
+      role: role || 'USER',
+    };
+
+    if (image) userData.image = image;
+    if (gender) userData.gender = gender;
+    if (phone) userData.phone = phone;
+    if (birthDate && !isNaN(new Date(birthDate).getTime())) {
+      userData.birthDate = new Date(birthDate);
+    }
+
     const user = await prisma.user.create({
-      data: {
-        image,
-        name,
-        email,
-        password: hashedPassword,
-        gender,
-        birthDate: new Date(birthDate),
-        phone,
-        role: role || 'USER',
-      },
+      data: userData,
     });
 
     console.log(`🔐 New user signed up`);
@@ -42,9 +47,10 @@ export const signUp = async (req, res) => {
 }
 
 export const signIn = async (req, res) => {
-  const { email, password } = req.body
+  const { email, password } = req.body;
 
   try {
+    const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
       console.log(`⚠️ Failed login attempt (user not found): ${email}`);
       return res.status(401).json({ message: 'Invalid credentials' });
@@ -56,19 +62,19 @@ export const signIn = async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    console.log(`✅ User logged in`);
+    console.log(`✅ User logged in: ${email}`);
 
-    generateToken(user, res)
-    res.status(200).json({ message: 'Logged in', user: { id: user.id, email: user.email, role: user.role } })
+    generateToken(user, res);
+    res.status(200).json({ message: 'Logged in', user: { id: user.id, email: user.email, role: user.role } });
 
   } catch (err) {
     console.error('❌ Sign-in error:', err);
-    res.status(500).json({ message: 'Server error' })
+    res.status(500).json({ message: 'Server error' });
   }
-}
+};
 
 export const signOut = (req, res) => {
-  res.cookie('token', '', { httpOnly: true, expires: new Date(0) })
+  res.cookie('token', '', { httpOnly: true, expires: new Date(0) });
   console.log('🚪 User logged out');
-  res.status(200).json({ message: 'Logged out' })
-}
+  res.status(200).json({ message: 'Logged out' });
+};

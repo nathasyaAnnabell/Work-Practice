@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllUsers, getUserById, updateUser, deleteUser, } from "../controllers/userController.js";
+import { getAllUsers, getUserById, updateProfile, updateUser, deleteUser, } from "../controllers/userController.js";
 import { authenticateUser, adminOnly } from "../middleware/authMiddleware.js";
 import upload from '../middleware/multer.js'
 
@@ -8,6 +8,7 @@ router.use(authenticateUser)
 
 router.get("/", adminOnly, getAllUsers);
 router.get("/:id", getUserById);
+router.put('/profile', upload.single('image'), updateProfile);
 router.patch("/:id", upload.single('image'), updateUser);
 router.delete("/:id", deleteUser);
 
