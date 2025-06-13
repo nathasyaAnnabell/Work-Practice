@@ -14,14 +14,14 @@ const storage = multer.diskStorage({
   filename(req, file, cb) {
     const ext = path.extname(file.originalname)
     const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`
-      cb(null, uniqueName)
+    cb(null, uniqueName)
   }
 })
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg']
-    if (allowedTypes.includes(file.mimetype)) cb(null, true)
-      else cb(new Error('Only jpeg, png, jpg allowed!'), false)
+  if (allowedTypes.includes(file.mimetype)) cb(null, true)
+  else cb(new Error('Only jpeg, png, jpg allowed!'), false)
 }
 
 const upload = multer({ storage, fileFilter })
