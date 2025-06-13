@@ -19,7 +19,7 @@ GET   /api/users
 
 GET   /api/users/id
 
-PUT  /api/users/profile
+POST  /api/users/profile
 
 PATCH /api/users/id
 
