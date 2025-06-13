@@ -8,7 +8,7 @@ router.use(authenticateUser)
 
 router.get("/", adminOnly, getAllUsers);
 router.get("/:id", getUserById);
-router.put('/profile', upload.single('image'), updateProfile);
+router.post('/profile', upload.single('image'), updateProfile);
 router.patch("/:id", upload.single('image'), updateUser);
 router.delete("/:id", deleteUser);
 
